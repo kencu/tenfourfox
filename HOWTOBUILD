@@ -1,0 +1,35 @@
+sudo port install git libidl autoconf213 gmake python27 gcc48 freetype 
+
+on Intel, you also need two compilers:
+
+sudo port install yasm clang-3.4
+
+on 10.5 PPC, the 10.4 SDK has some older gcc roots that the ld74-127 linkeer won't like 
+too much, so install an older linker on 10.5 PPC and set it to the default:
+
+sudo port -v install ld64-97
+sudo port -v install ld64 +ld64_97
+
+
+
+And then:
+
+autoconf213
+gmake -f client.mk build 
+
+to get more verbose builds, edit client.mk to remove the "-s".
+
+however, doing this all the time may generate errors. To be further evaluated.
+
+--- a/client.mk
++++ b/client.mk
+@@ -154,7 +154,7 @@ else
+ endif
+ endif # MOZ_BUILD_PROJECTS
+ 
+-MOZ_MAKE = $(MAKE) -j2 -s -C $(OBJDIR)
++MOZ_MAKE = $(MAKE) -j2 -C $(OBJDIR)
+
+and finally:
+
+./104fx_copy.sh TenFourFox.app
